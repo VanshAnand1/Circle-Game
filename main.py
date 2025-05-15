@@ -3,7 +3,7 @@ import random
 import math
 pygame.font.init()
 
-WINDOW_WIDTH = 800
+WINDOW_WIDTH = 1200
 WINDOW_HEIGHT = 800
 INC = 20
 STAT_FONT = pygame.font.SysFont("comicsans", 50)
@@ -91,7 +91,7 @@ def main():
     while run:
         if state == False:
             text = STAT_FONT.render("press any key to start the game", 1, (255, 0, 0))
-            window.blit(text, (25, 400))
+            window.blit(text, (WINDOW_WIDTH//2 - 350, 400))
             pygame.display.update()
             circles = []
             remove = []
