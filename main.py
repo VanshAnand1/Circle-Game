@@ -5,28 +5,28 @@ pygame.font.init()
 
 WINDOW_WIDTH = 1200
 WINDOW_HEIGHT = 800
-INC = 20
+INC = 70
 STAT_FONT = pygame.font.SysFont("comicsans", 50)
 
 class Circle:
     def __init__(self, player):
-        self.radius = random.randint(max(2, player.radius - 45), player.radius + 20)
+        self.radius = random.randint(max(2, player.radius - 45), player.radius + 10)
         self.color = (random.randint(30, 230), random.randint(30, 230), random.randint(30, 230))
         r = random.randint(1, 4)
         if r % 4 == 0:
-            self.x = -20
-            self.y = random.randint(-20, WINDOW_HEIGHT + INC)
+            self.x = -INC
+            self.y = random.randint(-INC, WINDOW_HEIGHT + INC)
             self.angle = random.randint(-45, 45)
         elif r % 4 == 1:
             self.x = WINDOW_WIDTH + INC
-            self.y = random.randint(-20, WINDOW_HEIGHT + INC)
+            self.y = random.randint(-INC, WINDOW_HEIGHT + INC)
             self.angle = random.randint(135, 225)
         elif r % 4 == 2:
-            self.x = random.randint(-20, WINDOW_WIDTH + INC)
-            self.y = -20
+            self.x = random.randint(-INC, WINDOW_WIDTH + INC)
+            self.y = -INC
             self.angle = random.randint(225, 315)
         else:
-            self.x = random.randint(-20, WINDOW_WIDTH + INC)
+            self.x = random.randint(-INC, WINDOW_WIDTH + INC)
             self.y = WINDOW_HEIGHT + INC
             self.angle = random.randint(45, 135)
         if self.radius < 5:
@@ -40,7 +40,7 @@ class Circle:
         self.y += math.cos(self.angle) * self.velocity
 
     def border(self):
-        if self.x > WINDOW_WIDTH + 2.5 * INC or self.x < -50 or self.y > WINDOW_HEIGHT + 2.5 * INC or self.y < -50:
+        if self.x > WINDOW_WIDTH + 2.5 * INC or self.x < -2*INC or self.y > WINDOW_HEIGHT + 2.5 * INC or self.y < -2*INC:
             return True
         return False
         
