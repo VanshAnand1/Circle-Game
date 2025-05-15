@@ -5,40 +5,42 @@ pygame.font.init()
 
 WINDOW_WIDTH = 800
 WINDOW_HEIGHT = 800
+INC = 20
 STAT_FONT = pygame.font.SysFont("comicsans", 50)
 
 class Circle:
-    def __init__(self):
-        self.radius = random.randint(2, 50)
+    def __init__(self, player):
+        self.radius = random.randint(max(2, player.radius - 45), player.radius + 20)
         self.color = (random.randint(30, 230), random.randint(30, 230), random.randint(30, 230))
         r = random.randint(1, 4)
         if r % 4 == 0:
             self.x = -20
-            self.y = random.randint(-20, 820)
+            self.y = random.randint(-20, WINDOW_HEIGHT + INC)
             self.angle = random.randint(-45, 45)
         elif r % 4 == 1:
-            self.x = 820
-            self.y = random.randint(-20, 820)
+            self.x = WINDOW_WIDTH + INC
+            self.y = random.randint(-20, WINDOW_HEIGHT + INC)
             self.angle = random.randint(135, 225)
         elif r % 4 == 2:
-            self.x = random.randint(-20, 820)
+            self.x = random.randint(-20, WINDOW_WIDTH + INC)
             self.y = -20
             self.angle = random.randint(225, 315)
         else:
-            self.x = random.randint(-20, 820)
-            self.y = 820
+            self.x = random.randint(-20, WINDOW_WIDTH + INC)
+            self.y = WINDOW_HEIGHT + INC
             self.angle = random.randint(45, 135)
         if self.radius < 5:
             self.velocity = 40/self.radius
         else:
-            self.velocity = 110/self.radius
+            self.velocity = 140/self.radius
+        self.velocity *= 1/4
     
     def move(self):
         self.x += math.sin(self.angle) * self.velocity
         self.y += math.cos(self.angle) * self.velocity
 
     def border(self):
-        if self.x > 850 or self.x < -50 or self.y > 850 or self.y < -50:
+        if self.x > WINDOW_WIDTH + 2.5 * INC or self.x < -50 or self.y > WINDOW_HEIGHT + 2.5 * INC or self.y < -50:
             return True
         return False
         
@@ -94,9 +96,9 @@ def main():
             circles = []
             remove = []
             score = 0
-            while len(circles) < 20:
-                circles.append(Circle())
             player = Player()
+            while len(circles) < 20:
+                circles.append(Circle(player))
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     state = False
@@ -106,7 +108,7 @@ def main():
                     state = True
                     break
         if state:
-            clock.tick(30)
+            clock.tick(120)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     run = False
@@ -127,12 +129,12 @@ def main():
             remove.clear()
 
             while len(circles) < 25:
-                circles.append(Circle())
+                circles.append(Circle(player))
 
-            if player.radius >= 400:
-                player.radius = 400
+            if player.radius >= 410:
+                player.radius = 410
         
-            score = player.radius
+            score = player.radius - 10
             draw_window(window, circles, player, score)
 
 main()
