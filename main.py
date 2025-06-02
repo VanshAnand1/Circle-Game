@@ -10,7 +10,7 @@ STAT_FONT = pygame.font.SysFont("comicsans", 50)
 
 class Circle:
     def __init__(self, player):
-        self.radius = random.randint(max(2, player.radius - 45), player.radius + 10)
+        self.radius = random.randint(2, player.radius + 15)
         self.color = (random.randint(30, 230), random.randint(30, 230), random.randint(30, 230))
         r = random.randint(1, 4)
         if r % 4 == 0:
@@ -95,6 +95,7 @@ def main():
             pygame.display.update()
             circles = []
             remove = []
+            big = []
             score = 0
             player = Player()
             while len(circles) < 20:
@@ -123,12 +124,13 @@ def main():
                 elif player.collisions(circle) == 0:
                     state = False
                 circle.move()
+                
 
             for circle in remove:
                 circles.remove(circle)
             remove.clear()
 
-            while len(circles) < 25:
+            while len(circles) < 55:
                 circles.append(Circle(player))
 
             if player.radius >= 410:
